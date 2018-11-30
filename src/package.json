@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/nezoutcarl/M2WEB-1-faget-nezout#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "html": "^1.0.0",
+    "morgan": "^1.9.1",
+    "request": "^2.88.0"
   }
 }
