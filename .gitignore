@@ -1,2 +1,20 @@
-src/node_modules
+src/client/node_modules/
+src/server/node_modules/
 m2web-1-faget-nezout/node_modules
+
+src/client/.DS_Store
+src/client/dist/
+src/client/npm-debug.log*
+src/client/yarn-debug.log*
+src/client/yarn-error.log*
+src/client/test/unit/coverage/
+src/client/test/e2e/reports/
+src/client/selenium-debug.log
+
+# Editor directories and files
+src/client/.idea
+src/client/.vscode
+src/client/*.suo
+src/client/*.ntvs*
+src/client/*.njsproj
+src/client/*.sln

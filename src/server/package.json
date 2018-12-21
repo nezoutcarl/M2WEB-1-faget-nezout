@@ -2,9 +2,9 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +18,15 @@
   },
   "homepage": "https://github.com/nezoutcarl/M2WEB-1-faget-nezout#readme",
   "dependencies": {
+    "@vue/cli": "^3.2.1",
+    "axios": "^0.18.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "html": "^1.0.0",
+    "mongoose": "^5.4.0",
     "morgan": "^1.9.1",
-    "request": "^2.88.0"
+    "nodemon": "^1.18.9",
+    "request": "^2.88.0",
+    "vue": "^2.5.21"
   }
 }
