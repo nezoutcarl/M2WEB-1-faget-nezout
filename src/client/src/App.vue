@@ -1,13 +1,25 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div class="container">
+      <img src="./assets/logo1.png" alt="loading"/>
+    </div>
+    <app-nav/>
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
+import AppNav from '@/components/AppNav'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { AppNav },
+  data () {
+    return {
+    }
+  }
 }
 </script>
 

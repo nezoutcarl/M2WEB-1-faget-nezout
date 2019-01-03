@@ -1,8 +1,8 @@
 <template>
-  <div class="tests">
+  <div class="test">
     <h1>TEst Open food facts API</h1>
     This will return the request content!
-    {{test.img}}
+    {{ test.imgUrl }}
   </div>
 </template>
 

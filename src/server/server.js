@@ -38,7 +38,7 @@ app.get('/test', function(req, res) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
             res.send({
-                img: info.product.image_url
+                imgUrl: info.product.image_url
             });
         }
     });
@@ -49,7 +49,11 @@ app.get('/posts', (req,res)=> {
         [{
             title: "Hello World",
             description: "Hi there! How are you ?"
-        }]
+        },
+    {
+        title: "Kikou VueJS c'est Node!!!",
+        description: "Je te file des trucs !! des trucs!"
+    }]
     )
 })
 
