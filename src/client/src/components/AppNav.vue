@@ -8,7 +8,7 @@
   <b-collapse is-nav id="nav_collapse">
 
     <b-navbar-nav>
-      <b-nav-item href="#">Home</b-nav-item>
+      <b-nav-item to="/test">Home</b-nav-item>
       <b-nav-item href="#" disabled>Disabled</b-nav-item>
     </b-navbar-nav>
 
@@ -23,10 +23,10 @@
       <b-nav-item-dropdown right>
         <!-- Using button-content slot -->
         <template slot="button-content">
-          <em>{{$auth.user.name}}</em>
+          <em><img :src="$auth.user.picture" width="30" height="30"> {{$auth.user.name}}</em>
         </template>
         <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <b-dropdown-item @click="$auth.logout()" href="#">Signout</b-dropdown-item>
+        <b-dropdown-item @click="$auth.logout()" href="#">Log out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
@@ -35,14 +35,11 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'app-nav',
-  data () {
-    return {
-      
-    }
-  }
+  name: 'app-nav'
 }
 </script>
+
+<style>
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+</style>

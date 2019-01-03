@@ -1,10 +1,11 @@
 <template>
-    <div>
-        Home
-    </div>
+  <app-nav/>
 </template>
+
 <script>
+import AppNav from './AppNav'
 export default {
-  name: 'home'
+  name: 'home',
+  components: { AppNav }
 }
 </script>
