@@ -1,5 +1,6 @@
 <template>
   <div id="parentx">
+    <vs-button @click="active=!active, notExpand=false" color="success" type="filled">Open</vs-button>
     <vs-sidebar :reduce="reduce" :reduce-not-hover-expand="notExpand" parent="body" default-index="1"  color="success" class="sidebarx" spacer v-model="active">
 
       <div class="header-sidebar"  vs-align="flex-start" slot="header">
@@ -10,14 +11,14 @@
         <vs-sidebar-item index="1" icon="menu" @click="reduce=!reduce">
           Toggle Sidebar
         </vs-sidebar-item>
-        <vs-sidebar-item index="5" icon="verified_user">
-          Configurations
+        <vs-sidebar-item index="5" icon="bookmarks">
+          Favoris
         </vs-sidebar-item>
         <vs-sidebar-group icon="search" title="Recherche">
-          <vs-sidebar-item index="2.1" icon="store">
+          <vs-sidebar-item index="2.1" icon="store" href="/products/1">
             Produits
           </vs-sidebar-item>
-          <vs-sidebar-item index="2.2" icon="nature_people">
+          <vs-sidebar-item index="2.2" icon="nature_people" href="/categories/1">
             Catégories
           </vs-sidebar-item>
           <vs-sidebar-item index="2.3" icon="style">
@@ -55,16 +56,23 @@
 
 export default {
   name: 'app-nav',
-  data () {
-    return {
-      active: true,
-      notExpand: false,
-      reduce: true
+  data: () => ({
+    active: false,
+    notExpand: false,
+    reduce: false
+  }),
+  methods: {
+    navigateToProducts () {
+      this.$router.push({name: 'Products'})
+    },
+
+    navigateToCategories () {
+      this.$router.push({name: 'Categories'})
     }
   }
 }
 </script>
 
-<style>
+<style >
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 </style>

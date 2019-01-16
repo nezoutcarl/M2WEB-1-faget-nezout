@@ -34,6 +34,6 @@ html {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: #f2f4f7;
+  background-color: #fdfcfa;
 }
 </style>

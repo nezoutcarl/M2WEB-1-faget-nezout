@@ -5,6 +5,7 @@ import Posts from '@/components/Posts'
 import Product from '@/components/Product'
 import Products from '@/components/Products'
 import Callback from '@/components/Callback'
+import Favorite from '@/components/Favorite'
 import Home from '@/components/Home'
 
 Vue.use(Router)
@@ -41,6 +42,11 @@ const router = new Router({
       path: '/posts',
       name: 'Posts',
       component: Posts
+    },
+    {
+      path: '/user/:id/favorite',
+      name: 'favorites',
+      component: Favorite
     }
   ]
 })
