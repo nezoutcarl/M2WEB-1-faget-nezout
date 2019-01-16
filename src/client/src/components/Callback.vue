@@ -8,6 +8,7 @@ export default {
   mounted () {
     this.$auth.handleAuthentication().then((data) => {
       this.$router.push({ name: 'home' })
+      this.$router.go()
     })
   }
 }

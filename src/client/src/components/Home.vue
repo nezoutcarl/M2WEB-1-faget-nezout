@@ -1,11 +1,12 @@
 <template>
-  <app-nav/>
+<div>
+OKOK
+</div>
 </template>
 
 <script>
-import AppNav from './AppNav'
+
 export default {
-  name: 'home',
-  components: { AppNav }
+  name: 'home'
 }
 </script>
