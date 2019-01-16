@@ -8,7 +8,7 @@
       </div>
       <vs-sidebar-group open title="Application">
         <vs-sidebar-item index="1" icon="menu" @click="reduce=!reduce">
-         Toggle Sidebar
+          Toggle Sidebar
         </vs-sidebar-item>
         <vs-sidebar-item index="5" icon="verified_user">
           Configurations
@@ -44,7 +44,7 @@
       </vs-sidebar-item>
 
       <div class="footer-sidebar" slot="footer">
-        <vs-button icon="reply" color="danger" type="border" @click="$auth.logout()"><span >log out</span></vs-button>
+        <vs-button icon="reply" color="danger" type="border" @click="$auth.logout()"><span >Log Out</span></vs-button>
       </div>
 
     </vs-sidebar>
@@ -52,8 +52,6 @@
 </template>
 
 <script>
-
-// Vue.forceUpdate()
 
 export default {
   name: 'app-nav',
