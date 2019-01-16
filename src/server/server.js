@@ -8,7 +8,6 @@ const morgan = require('morgan');
 
 const cors = require('cors');
 
-
 const app = express();
 
 /* ***** DB Connection ***** */
@@ -17,21 +16,84 @@ const MONGO_URL = "mongodb://admin:m2webadmin@ds115094.mlab.com:15094/m2web-db" 
 
 
 MongoClient.connect(MONGO_URL, {useNewUrlParser: true}).then(
-          () => {console.log('Database connection is successful') },
-          err => { console.log('Error when connecting to the database'+ err)}
+          () => {console.log('Database connection is successful.') },
+          err => { console.log('Error when connecting to the database.'+ err)}
 );
 
-/*  ******************* */
-app.use(bodyParser.json());
-
+/*  ************************ */
 app.use(express.static(__dirname + '/public'));
 
+app.use(bodyParser.json());
+
 app.use(morgan('combined'));
-app.use(bodyParser.json())
 
 app.use(cors());
 
+app.get('/products/:page', function(req, res) {
+    // TODO - tester si le numéro de page est valide
+    if (req.params.page < 1) {
+        console.log("TODO");
+    }
+    request('https://world.openfoodfacts.org/country/france/' + req.params.page + '.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            const info = JSON.parse(body);
+            let elements = [];
+            for (let i = 0; i < info.page_size; ++i) {
+                const tmp = {
+                    image_front_small_url: info.products[i]['image_front_small_url'],
+                    product_name: info.products[i].product_name,
+                    nutrition_grades: info.products[i].nutrition_grades,
+                    nova_group: info.products[i.toString(10)].nova_group
+                };
+                elements.push(tmp);
+            }
+            res.send({
+                page: info.page,
+                page_size: info.page_size,
+                count: info.count,
+                elements: elements
+            });
+        }
+    });
+});
 
+app.get('/product/:code', function(req, res) {
+    request('https://world.openfoodfacts.org/api/v0/product/' + req.params.code + '.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            const info = JSON.parse(body);
+            // TODO - tester si le produit a été trouvé
+            if (info.status == 0) {
+                console.log("TODO");
+            }
+            res.send({
+                code: info.product['_id'],
+                image_url: info.product['image_url'],
+                image_front_small_url: info.product['image_front_small_url'],
+                generic_name: info.product.generic_name,
+                product_name: info.product.product_name,
+                brands: info.product.brands,
+
+                origins: info.product.origins,
+                categories: info.product.categories,
+                product_quantity: info.product.product_quantity,
+                ingredients_text_with_allergens: info.product.ingredients_text_with_allergens,
+
+                fat_100g: info.product.nutriments.fat_100g,
+                saturated_fat_100g: info.product.nutriments['saturated-fat_100g'],
+                sugars_100g: info.product.nutriments.sugars_100g,
+                salt_100g: info.product.nutriments.salt_100g,
+
+                fat: info.product.nutrient_levels.fat,
+                saturated_fat: info.product.nutrient_levels['saturated-fat'],
+                sugars: info.product.nutrient_levels.sugars,
+                salt: info.product.nutrient_levels.salt,
+
+                nutrition_grades: info.product.nutrition_grades,
+                nova_group: info.product.nova_group
+            });
+        }
+    });
+});
 
 app.get('/test', function(req, res) {
     request('https://world.openfoodfacts.org/api/v0/product/737628064502.json', function (error, response, body) {
@@ -47,12 +109,12 @@ app.get('/test', function(req, res) {
 app.get('/posts', (req,res)=> {
     res.send(
         [{
-            title: "Hello World",
-            description: "Hi there! How are you ?"
+            title: "Hello, world!",
+            description: "Hi there! How are you?"
         },
     {
-        title: "Kikou VueJS c'est Node!!!",
-        description: "Je te file des trucs !! des trucs!"
+        title: "Salut VueJS, moi c'est Node !",
+        description: "Je te file quelques trucs !!"
     }]
     )
 })

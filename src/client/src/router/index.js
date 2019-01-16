@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Test from '@/components/Test'
 import Posts from '@/components/Posts'
+import Product from '@/components/Product'
+import Products from '@/components/Products'
 import Callback from '@/components/Callback'
 import Home from '@/components/Home'
 
@@ -19,6 +21,16 @@ const router = new Router({
       path: '/callback',
       name: 'callback',
       component: Callback
+    },
+    {
+      path: '/product/:code',
+      name: 'Product',
+      component: Product
+    },
+    {
+      path: '/products/:page',
+      name: 'Products',
+      component: Products
     },
     {
       path: '/test',
