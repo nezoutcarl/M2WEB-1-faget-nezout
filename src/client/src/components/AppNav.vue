@@ -15,10 +15,10 @@
         </vs-sidebar-item>
         <vs-sidebar-group icon="search" title="Recherche">
           <vs-sidebar-item index="2.1" icon="store">
-            Store
+            Produits
           </vs-sidebar-item>
           <vs-sidebar-item index="2.2" icon="nature_people">
-            Nature
+            Catégories
           </vs-sidebar-item>
           <vs-sidebar-item index="2.3" icon="style">
             Style
@@ -27,9 +27,9 @@
         <vs-sidebar-item index="2" icon="gavel">
           History
         </vs-sidebar-item>
-        <vs-idebsar-item index="3" icon="https">
+        <vs-sidebsar-item index="3" icon="https">
           Security
-        </vs-idebsar-item>
+        </vs-sidebsar-item>
         <vs-sidebar-item index="4" icon="help">
           Help
         </vs-sidebar-item>
@@ -44,7 +44,7 @@
       </vs-sidebar-item>
 
       <div class="footer-sidebar" slot="footer">
-        <vs-button icon="reply" color="danger" type="border" @click="$auth.logout()">log out</vs-button>
+        <vs-button icon="reply" color="danger" type="border" @click="$auth.logout()"><span >log out</span></vs-button>
       </div>
 
     </vs-sidebar>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+
+// Vue.forceUpdate()
 
 export default {
   name: 'app-nav',
