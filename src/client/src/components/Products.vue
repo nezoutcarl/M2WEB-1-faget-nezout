@@ -25,9 +25,9 @@
   <b-card-group deck >
       <div v-for="(product, index) in products.elements" :key="index">
          <b-card class="rounded" :title="product.product_name">
-            <b-card-img class="img-size" :src="product.image_front_small_url"
+            <a v-bind:href="'/product/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
             alt="Img"
-            top/>
+            top/></a>
             <p class="card-text">
               <span><img :src="getNutriScore(product.nutrition_grades)" :alt="product.nova_group"></span>
               <span><img :src="getNovaGroupUrl(product.nova_group)" :alt="product.nova_group"></span>
