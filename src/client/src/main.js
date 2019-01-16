@@ -7,7 +7,11 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import auth from './auth/AuthService'
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css' // Vuesax styles
+import 'material-icons/iconfont/material-icons.css'
 
+Vue.use(Vuesax)
 Vue.use(auth)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)

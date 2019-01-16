@@ -1,42 +1,67 @@
 <template>
-<b-navbar toggleable="md" type="dark" variant="success">
+  <div id="parentx">
+    <vs-sidebar :reduce="reduce" :reduce-not-hover-expand="notExpand" parent="body" default-index="1"  color="success" class="sidebarx" spacer v-model="active">
 
-  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <div class="header-sidebar"  vs-align="flex-start" slot="header">
+        <vs-avatar  size="70px" :src="$auth.user.picture"/>
+        <h4>{{$auth.user.name}}</h4>
+      </div>
+      <vs-sidebar-group open title="Application">
+        <vs-sidebar-item index="1" icon="menu" @click="reduce=!reduce">
+         Toggle Sidebar
+        </vs-sidebar-item>
+        <vs-sidebar-item index="5" icon="verified_user">
+          Configurations
+        </vs-sidebar-item>
+        <vs-sidebar-group icon="search" title="Recherche">
+          <vs-sidebar-item index="2.1" icon="store">
+            Store
+          </vs-sidebar-item>
+          <vs-sidebar-item index="2.2" icon="nature_people">
+            Nature
+          </vs-sidebar-item>
+          <vs-sidebar-item index="2.3" icon="style">
+            Style
+          </vs-sidebar-item>
+        </vs-sidebar-group>
+        <vs-sidebar-item index="2" icon="gavel">
+          History
+        </vs-sidebar-item>
+        <vs-idebsar-item index="3" icon="https">
+          Security
+        </vs-idebsar-item>
+        <vs-sidebar-item index="4" icon="help">
+          Help
+        </vs-sidebar-item>
+      </vs-sidebar-group>
 
-  <b-navbar-brand href="#"><i class="fa fa-home"></i></b-navbar-brand>
+      <vs-divider icon="person" position="left">
+        User
+      </vs-divider>
 
-  <b-collapse is-nav id="nav_collapse">
+      <vs-sidebar-item index="6" icon="account_box">
+        Profile
+      </vs-sidebar-item>
 
-    <b-navbar-nav>
-      <b-nav-item to="/test">Home</b-nav-item>
-      <b-nav-item href="#" disabled>Disabled</b-nav-item>
-    </b-navbar-nav>
+      <div class="footer-sidebar" slot="footer">
+        <vs-button icon="reply" color="danger" type="border" @click="$auth.logout()">log out</vs-button>
+      </div>
 
-    <!-- Right aligned nav items -->
-    <b-navbar-nav class="ml-auto">
-
-      <b-nav-form>
-        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-      </b-nav-form>
-
-      <b-nav-item-dropdown right>
-        <!-- Using button-content slot -->
-        <template slot="button-content">
-          <em><img :src="$auth.user.picture" width="30" height="30"> {{$auth.user.name}}</em>
-        </template>
-        <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <b-dropdown-item @click="$auth.logout()" href="#">Log out</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-
-  </b-collapse>
-</b-navbar>
+    </vs-sidebar>
+  </div>
 </template>
 
 <script>
+
 export default {
-  name: 'app-nav'
+  name: 'app-nav',
+  data () {
+    return {
+      active: true,
+      notExpand: false,
+      reduce: true
+    }
+  }
 }
 </script>
 
