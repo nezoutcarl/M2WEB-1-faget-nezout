@@ -1,12 +1,12 @@
 <template>
-  <div class="products">
-    <h1>Products</h1>
+  <div class="country">
+    <h1>Country</h1>
 
-    <span><b>{{ products.page }}</b></span><br />
-    <span><b>{{ products.page_size }}</b></span><br />
-    <span><b>{{ products.count }}</b></span><br />
+    <span><b>{{ country.page }}</b></span><br />
+    <span><b>{{ country.page_size }}</b></span><br />
+    <span><b>{{ country.count }}</b></span><br />
 
-    <div v-for="(product, index) in products.elements" :key="index">
+    <div v-for="(product, index) in country.elements" :key="index">
         <div slot="media">
             <a v-bind:href="'/product/' + product.code"><img v-bind:src="product.image_front_small_url" /></a>
         </div>
@@ -17,27 +17,25 @@
             <span><b>{{ product.nova_group }}</b></span><br />
         </p>
     </div>
-    <p>
-    </p>
   </div>
 </template>
 
 <script>
-import ProductsService from '@/services/ProductsService'
+import CountryService from '@/services/CountryService'
 export default {
-  name: 'products',
+  name: 'country',
   data () {
     return {
-      products: []
+      country: []
     }
   },
   mounted () {
-    this.getProducts(this.$route.params.page)
+    this.getCountry(this.$route.params.id, this.$route.params.page)
   },
   methods: {
-    async getProducts (page) {
-      const response = await ProductsService.fetchProducts(page)
-      this.products = response.data
+    async getCountry (id, page) {
+      const response = await CountryService.fetchCountry(id, page)
+      this.country = response.data
     }
   }
 }

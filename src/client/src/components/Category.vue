@@ -1,12 +1,12 @@
 <template>
-  <div class="products">
-    <h1>Products</h1>
+  <div class="category">
+    <h1>Category</h1>
 
-    <span><b>{{ products.page }}</b></span><br />
-    <span><b>{{ products.page_size }}</b></span><br />
-    <span><b>{{ products.count }}</b></span><br />
+    <span><b>{{ category.page }}</b></span><br />
+    <span><b>{{ category.page_size }}</b></span><br />
+    <span><b>{{ category.count }}</b></span><br />
 
-    <div v-for="(product, index) in products.elements" :key="index">
+    <div v-for="(product, index) in category.elements" :key="index">
         <div slot="media">
             <a v-bind:href="'/product/' + product.code"><img v-bind:src="product.image_front_small_url" /></a>
         </div>
@@ -17,27 +17,25 @@
             <span><b>{{ product.nova_group }}</b></span><br />
         </p>
     </div>
-    <p>
-    </p>
   </div>
 </template>
 
 <script>
-import ProductsService from '@/services/ProductsService'
+import CategoryService from '@/services/CategoryService'
 export default {
-  name: 'products',
+  name: 'category',
   data () {
     return {
-      products: []
+      category: []
     }
   },
   mounted () {
-    this.getProducts(this.$route.params.page)
+    this.getCategory(this.$route.params.id, this.$route.params.page)
   },
   methods: {
-    async getProducts (page) {
-      const response = await ProductsService.fetchProducts(page)
-      this.products = response.data
+    async getCategory (id, page) {
+      const response = await CategoryService.fetchCategory(id, page)
+      this.category = response.data
     }
   }
 }

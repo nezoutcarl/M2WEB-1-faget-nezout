@@ -1,12 +1,12 @@
 <template>
-  <div class="products">
-    <h1>Products</h1>
+  <div class="search">
+    <h1>Search</h1>
 
-    <span><b>{{ products.page }}</b></span><br />
-    <span><b>{{ products.page_size }}</b></span><br />
-    <span><b>{{ products.count }}</b></span><br />
+    <span><b>{{ search.page }}</b></span><br />
+    <span><b>{{ search.page_size }}</b></span><br />
+    <span><b>{{ search.count }}</b></span><br />
 
-    <div v-for="(product, index) in products.elements" :key="index">
+    <div v-for="(product, index) in search.elements" :key="index">
         <div slot="media">
             <a v-bind:href="'/product/' + product.code"><img v-bind:src="product.image_front_small_url" /></a>
         </div>
@@ -23,21 +23,21 @@
 </template>
 
 <script>
-import ProductsService from '@/services/ProductsService'
+import SearchService from '@/services/SearchService'
 export default {
-  name: 'products',
+  name: 'search',
   data () {
     return {
-      products: []
+      search: []
     }
   },
   mounted () {
-    this.getProducts(this.$route.params.page)
+    this.getSearch(this.$route.params.code, this.$route.params.page)
   },
   methods: {
-    async getProducts (page) {
-      const response = await ProductsService.fetchProducts(page)
-      this.products = response.data
+    async getSearch (code, page) {
+      const response = await SearchService.fetchSearch(code, page)
+      this.search = response.data
     }
   }
 }
