@@ -53,14 +53,14 @@ export default {
       // links: ['/1', '/2', '/3']
     }
   },
-  computed: {   
+  computed: {
     pageLink () {
       return this.linkGen(this.currentPage)
     }
   },
   mounted () {
     this.getProducts(this.$route.params.page)
-    this.currentPage=parseInt(this.$route.params.page)
+    this.currentPage = parseInt(this.$route.params.page)
   },
   watch: {
 
@@ -88,7 +88,6 @@ export default {
     pageGen (pageNum) {
       return pageNum
     }
-
   }
 }
 </script>

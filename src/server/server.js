@@ -29,6 +29,42 @@ app.use(morgan('combined'));
 
 app.use(cors());
 
+function getPage(info) {
+    let elements = [];
+    for (let i = 0; i < info.page_size && info.products.hasOwnProperty(i); ++i) {
+        const tmp = {
+            code: info.products[i]['_id'],
+            image_front_small_url: info.products[i]['image_front_small_url'],
+            product_name: info.products[i].product_name,
+            nutrition_grades: info.products[i].nutrition_grades,
+            nova_group: info.products[i].nova_group
+        };
+        elements.push(tmp);
+    }
+    return {
+        page: info.page,
+        page_size: info.page_size,
+        count: info.count,
+        elements: elements
+    };
+}
+
+function getData(info) {
+    let elements = [];
+    for (let i = 0; i < info.count; ++i) {
+        const tmp = {
+            id: info.tags[i].id,
+            name: info.tags[i].name,
+            products: info.tags[i].products
+        };
+        elements.push(tmp);
+    }
+    return {
+        count: info.count,
+        elements: elements
+    };
+}
+
 app.get('/product/:code', function(req, res) {
     request('https://world.openfoodfacts.org/api/v0/product/' + req.params.code + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -76,23 +112,7 @@ app.get('/products/:page', function(req, res) {
     request('https://world.openfoodfacts.org/country/france/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            let elements = [];
-            for (let i = 0; i < info.page_size && info.products.hasOwnProperty(i); ++i) {
-                const tmp = {
-                    code: info.products[i]['_id'],
-                    image_front_small_url: info.products[i]['image_front_small_url'],
-                    product_name: info.products[i].product_name,
-                    nutrition_grades: info.products[i].nutrition_grades,
-                    nova_group: info.products[i.toString(10)].nova_group
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                page: info.page,
-                page_size: info.page_size,
-                count: info.count,
-                elements: elements
-            });
+            res.send(getPage(info));
         }
     });
 });
@@ -116,23 +136,7 @@ app.get('/products/:code/:page', function(req, res) {
     request('https://world.openfoodfacts.org/code/' + code + '/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            let elements = [];
-            for (let i = 0; i < info.page_size && info.products.hasOwnProperty(i); ++i) {
-                const tmp = {
-                    code: info.products[i]['_id'],
-                    image_front_small_url: info.products[i]['image_front_small_url'],
-                    product_name: info.products[i].product_name,
-                    nutrition_grades: info.products[i].nutrition_grades,
-                    nova_group: info.products[i.toString(10)].nova_group
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                page: info.page,
-                page_size: info.page_size,
-                count: info.count,
-                elements: elements
-            });
+            res.send(getPage(info));
         }
     });
 });
@@ -151,44 +155,7 @@ app.get('/category/:id/products/:page', function(req, res) {
                 console.log("TODO");
                 return;
             }
-            let elements = [];
-            for (let i = 0; i < info.page_size && info.products.hasOwnProperty(i); ++i) {
-                const tmp = {
-                    code: info.products[i]['_id'],
-                    image_front_small_url: info.products[i]['image_front_small_url'],
-                    product_name: info.products[i].product_name,
-                    nutrition_grades: info.products[i].nutrition_grades,
-                    nova_group: info.products[i.toString(10)].nova_group
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                page: info.page,
-                page_size: info.page_size,
-                count: info.count,
-                elements: elements
-            });
-        }
-    });
-});
-
-app.get('/categories', function(req, res) {
-    request('https://world.openfoodfacts.org/categories.json', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            const info = JSON.parse(body);
-            let elements = [];
-            for (let i = 0; i < info.count; ++i) {
-                const tmp = {
-                    id: info.tags[i].id,
-                    name: info.tags[i].name,
-                    products: info.tags[i].products
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                count: info.count,
-                elements: elements
-            });
+            res.send(getPage(info));
         }
     });
 });
@@ -202,28 +169,21 @@ app.get('/country/:id/products/:page', function(req, res) {
     request('https://world.openfoodfacts.org/country/' + req.params.id + '/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // TODO - tester si la catégorie a été trouvée
+            // TODO - tester si le pays a été trouvé
             if (info.count == 0) {
                 console.log("TODO");
                 return;
             }
-            let elements = [];
-            for (let i = 0; i < info.page_size && info.products.hasOwnProperty(i); ++i) {
-                const tmp = {
-                    code: info.products[i]['_id'],
-                    image_front_small_url: info.products[i]['image_front_small_url'],
-                    product_name: info.products[i].product_name,
-                    nutrition_grades: info.products[i].nutrition_grades,
-                    nova_group: info.products[i.toString(10)].nova_group
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                page: info.page,
-                page_size: info.page_size,
-                count: info.count,
-                elements: elements
-            });
+            res.send(getPage(info));
+        }
+    });
+});
+
+app.get('/categories', function(req, res) {
+    request('https://world.openfoodfacts.org/categories.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            const info = JSON.parse(body);
+            res.send(getData(info));
         }
     });
 });
@@ -232,19 +192,7 @@ app.get('/countries', function(req, res) {
     request('https://world.openfoodfacts.org/countries.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            let elements = [];
-            for (let i = 0; i < info.count; ++i) {
-                const tmp = {
-                    id: info.tags[i].id,
-                    name: info.tags[i].name,
-                    products: info.tags[i].products
-                };
-                elements.push(tmp);
-            }
-            res.send({
-                count: info.count,
-                elements: elements
-            });
+            res.send(getData(info));
         }
     });
 });
