@@ -267,7 +267,7 @@ app.post('/users/:id/favorites', async function(req, res) {
         users.insertOne({user_id: req.params.id, favorite: req.body.code});
         client.close();
     } catch (e) {
-        console.error(e)
+        res.status(500).send(e);
     }
 });
 
@@ -279,7 +279,7 @@ app.delete('/users/:id/favorites/:code', async function(req, res) {
         users.deleteOne({user_id: req.params.id, favorite: req.params.code});
         client.close();
     } catch (e) {
-        console.error(e)
+        res.status(500).send(e);
     }
 });
 
@@ -297,7 +297,7 @@ app.get('/users/:id/favorites', async function(req, res) {
             client.close();
         });
     } catch (e) {
-        console.error(e)
+        res.status(500).send(e);
     }
 });
 
