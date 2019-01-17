@@ -107,6 +107,7 @@ export default {
 </script>
 
 <style>
-/* .img-size {
-  max-width: calc(25% - 30px);} */
+.img-size {
+  margin-bottom: 15px;
+}
 </style>
