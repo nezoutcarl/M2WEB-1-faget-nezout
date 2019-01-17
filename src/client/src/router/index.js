@@ -31,22 +31,22 @@ const router = new Router({
       component: Callback
     },
     {
-      path: '/product/:code',
+      path: '/products/:code',
       name: 'Product',
       component: Product
     },
     {
-      path: '/products/:page',
+      path: '/products/pages/:page',
       name: 'Products',
       component: Products
     },
     {
-      path: '/products/:code/:page',
+      path: '/products/:code/pages/:page',
       name: 'SearchedProducts',
       component: SearchedProducts
     },
     {
-      path: '/brand/:name/products/:page',
+      path: '/brands/:name/products/pages/:page',
       name: 'Brand',
       component: Brand
     },
@@ -56,7 +56,7 @@ const router = new Router({
       component: Brands
     },
     {
-      path: '/category/:name/products/:page',
+      path: '/categories/:name/products/pages/:page',
       name: 'Category',
       component: Category
     },
@@ -71,7 +71,7 @@ const router = new Router({
       component: SearchedCategories
     },
     {
-      path: '/country/:name/products/:page',
+      path: '/countries/:name/products/pages/:page',
       name: 'Country',
       component: Country
     },
@@ -86,7 +86,7 @@ const router = new Router({
       component: SearchedCountries
     },
     {
-      path: '/user/:id/favorites',
+      path: '/users/:id/favorites',
       name: 'favorites',
       component: Favorites
     }

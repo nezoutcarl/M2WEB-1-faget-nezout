@@ -20,9 +20,9 @@
                                   header-bg-variant="dark"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
-                                  style="max-width: 40rem;max-width: 40rem;"
+                                  style="max-width: 30rem;"
                                   align="center">
-            <a v-bind:href="'/product/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
+            <a v-bind:href="'/products/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
             style="max-width: 30rem;max-height: 30rem;"
             alt="No image."
             top/></a>
@@ -31,10 +31,10 @@
               <span><img :src="getNovaGroup(product.nova_group)" alt="No nova group."></span>
             </p>
             <div slot="footer">
-              <router-link :to="{path: '/product/' + product.code}">
+              <router-link :to="{path: '/products/' + product.code}">
                 <button type="button" class="btn btn-primary">Details</button>
               </router-link>
-              <button type="button" class="btn btn-primary"><i class="fa fa-star"></i></button>
+              <button type="button" @click="addFavorite(product.code)" class="btn btn-primary"><i class="fa fa-star"></i></button>
             </div>
         </b-card>
       </div>
@@ -49,6 +49,7 @@
 
 <script>
 import CategoryService from '@/services/CategoryService'
+import FavoriteService from '@/services/FavoriteService'
 export default {
   name: 'category',
   data () {
@@ -76,6 +77,10 @@ export default {
       this.category = response.data
     },
 
+    async addFavorite (code) {
+      await FavoriteService.fetchAddFavorite(this.$auth.user.nickname, code)
+    },
+
     getNovaGroup (novaGroup) {
       return 'http://static.openfoodfacts.net/images/misc/nova-group-' + novaGroup + '.svg'
     },
@@ -92,7 +97,7 @@ export default {
       return num
     },
     linkGen () {
-      return '/category/' + this.$route.params.name + '/products/'
+      return '/categories/' + this.$route.params.name + '/products/pages/'
     },
     pageGen (pageNum) {
       return pageNum

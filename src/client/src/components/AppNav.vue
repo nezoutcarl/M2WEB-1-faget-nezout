@@ -11,11 +11,14 @@
         <vs-sidebar-item index="1" icon="menu" @click="reduce=!reduce">
           Toggle Sidebar
         </vs-sidebar-item>
-        <vs-sidebar-item index="5" icon="bookmarks">
+        <vs-sidebar-item index="5" icon="bookmarks" :href="'/'">
+          Home
+        </vs-sidebar-item>
+        <vs-sidebar-item index="5" icon="bookmarks" :href="'/users/' + $auth.user.nickname + '/favorites'">
           Favorites
         </vs-sidebar-item>
         <vs-sidebar-group icon="search" title="Research">
-          <vs-sidebar-item index="2.1" icon="store" href="/products/1">
+          <vs-sidebar-item index="2.1" icon="store" href="/products/pages/1">
             Products
           </vs-sidebar-item>
           <vs-sidebar-item index="2.2" icon="local_activity" href="/brands">

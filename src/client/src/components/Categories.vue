@@ -17,13 +17,13 @@
                                   header-bg-variant="dark"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
-                                  style="max-width: 40rem;max-width: 40rem;"
+                                  style="max-width: 30rem;"
                                   align="center">
           <p class="card-text">
             <span><b>{{ category.products }} products</b></span>
           </p>
           <div slot="footer">
-            <router-link :to="{path: '/category/' + category.name + '/products/1'}">
+            <router-link :to="{path: '/categories/' + category.name + '/products/pages/1'}">
               <button type="button" class="btn btn-primary">Open</button>
             </router-link>
           </div>

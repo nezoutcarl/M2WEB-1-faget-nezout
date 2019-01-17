@@ -5,16 +5,16 @@
     </div>
     <b-card-group columns>
       <div v-for="(category, index) in categories.elements" :key="index">
-        <b-card class="rounded" :header="councategorytry.name"
+        <b-card class="rounded" :header="category.name"
                                   header-text-variant="white"
                                   header-tag="header"
                                   header-bg-variant="dark"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
-                                  style="max-width: 40rem;max-width: 40rem;"
+                                  style="max-width: 30rem;"
                                   align="center">
           <p class="card-text">
-            <router-link :to="{path: '/category/' + category.name + '/products/1'}">
+            <router-link :to="{path: '/categories/' + category.name + '/products/pages/1'}">
               <button type="button" class="btn btn-primary">Open</button>
             </router-link>
           </p>

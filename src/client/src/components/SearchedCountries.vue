@@ -11,10 +11,10 @@
                                   header-bg-variant="dark"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
-                                  style="max-width: 40rem;max-width: 40rem;"
+                                  style="max-width: 30rem;"
                                   align="center">
           <p class="card-text">
-            <router-link :to="{path: '/country/' + country.name + '/products/1'}">
+            <router-link :to="{path: '/countries/' + country.name + '/products/pages/1'}">
               <button type="button" class="btn btn-primary">Open</button>
             </router-link>
           </p>

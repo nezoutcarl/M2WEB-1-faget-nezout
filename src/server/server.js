@@ -12,22 +12,27 @@ const app = express();
 
 /* ***** DB Connection ***** */
 const MongoClient = require('mongodb').MongoClient;
-const MONGO_URL = "mongodb://admin:m2webadmin@ds115094.mlab.com:15094/m2web-db" ;
-
-
-MongoClient.connect(MONGO_URL, {useNewUrlParser: true}).then(
-          () => {console.log('Database connection is successful.') },
-          err => { console.log('Error when connecting to the database.'+ err)}
-);
+const MONGO_URL = 'mongodb://admin:m2webadmin@ds115094.mlab.com:15094/m2web-db';
+const MONGO_DB = 'm2web-db';
+const COLLECTION  = 'users';
 
 /*  ************************ */
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(morgan('combined'));
 
 app.use(cors());
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
 
 function getPage(info) {
     let elements = [];
@@ -77,13 +82,12 @@ function getSearchedData(info) {
     };
 }
 
-app.get('/product/:code', function(req, res) {
+app.get('/products/:code', function(req, res) {
     request('https://world.openfoodfacts.org/api/v0/product/' + req.params.code + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // TODO - tester si le produit a été trouvé
             if (info.status == 0) {
-                console.log("TODO");
+                res.status(500).send('Product not found!');
                 return;
             }
             res.send({
@@ -116,10 +120,9 @@ app.get('/product/:code', function(req, res) {
     });
 });
 
-app.get('/products/:page', function(req, res) {
-    // TODO - tester si le numéro de page est valide
+app.get('/products/pages/:page', function(req, res) {
     if (req.params.page < 1) {
-        console.log("TODO");
+        res.status(500).send('Page not available!');
     }
     request('https://world.openfoodfacts.org/country/france/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -129,16 +132,14 @@ app.get('/products/:page', function(req, res) {
     });
 });
 
-app.get('/products/:code/:page', function(req, res) {
+app.get('/products/:code/pages/:page', function(req, res) {
     let code = req.params.code;
-    // TODO - tester si le code est valide
     if (code.length < 1 || code.length > 13) {
-        console.log("TODO");
+        res.status(500).send('Invalid code!');
         return;
     }
-    // TODO - tester si le numéro de page est valide
     if (req.params.page < 1) {
-        console.log("TODO");
+        res.status(500).send('Page not available!');
         return;
     }
     while (code.length < 13) {
@@ -152,18 +153,16 @@ app.get('/products/:code/:page', function(req, res) {
     });
 });
 
-app.get('/brand/:name/products/:page', function(req, res) {
-    // TODO - tester si le numéro de page est valide
+app.get('/brands/:name/products/pages/:page', function(req, res) {
     if (req.params.page < 1) {
-        console.log("TODO");
+        res.status(500).send('Page not available!');
         return;
     }
     request('https://world.openfoodfacts.org/brand/' + req.params.name + '/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // TODO - tester si la marque a été trouvée
             if (info.count == 0) {
-                console.log("TODO");
+                res.status(500).send('Brand not found!');
                 return;
             }
             res.send(getPage(info));
@@ -171,18 +170,16 @@ app.get('/brand/:name/products/:page', function(req, res) {
     });
 });
 
-app.get('/category/:name/products/:page', function(req, res) {
-    // TODO - tester si le numéro de page est valide
+app.get('/categories/:name/products/pages/:page', function(req, res) {
     if (req.params.page < 1) {
-        console.log("TODO");
+        res.status(500).send('Page not available!');
         return;
     }
     request('https://world.openfoodfacts.org/category/' + req.params.name + '/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // TODO - tester si la catégorie a été trouvée
             if (info.count == 0) {
-                console.log("TODO");
+                res.status(500).send('Category not found!');
                 return;
             }
             res.send(getPage(info));
@@ -190,18 +187,16 @@ app.get('/category/:name/products/:page', function(req, res) {
     });
 });
 
-app.get('/country/:name/products/:page', function(req, res) {
-    // TODO - tester si le numéro de page est valide
+app.get('/countries/:name/products/pages/:page', function(req, res) {
     if (req.params.page < 1) {
-        console.log("TODO");
+        res.status(500).send('Page not available!');
         return;
     }
     request('https://world.openfoodfacts.org/country/' + req.params.name + '/' + req.params.page + '.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             const info = JSON.parse(body);
-            // TODO - tester si le pays a été trouvé
             if (info.count == 0) {
-                console.log("TODO");
+                res.status(500).send('Country not found!');
                 return;
             }
             res.send(getPage(info));
@@ -238,9 +233,8 @@ app.get('/countries', function(req, res) {
 
 app.get('/categories/:name', function(req, res) {
     let name = req.params.name;
-    // TODO - tester si le code est valide
     if (name.length < 1) {
-        console.log("TODO");
+        res.status(500).send('Incorrect value!');
         return;
     }
     request('https://world.openfoodfacts.org/cgi/suggest.pl?lc=en&tagtype=categories&string=' + name, function (error, response, body) {
@@ -253,9 +247,8 @@ app.get('/categories/:name', function(req, res) {
 
 app.get('/countries/:name', function(req, res) {
     let name = req.params.name;
-    // TODO - tester si le code est valide
     if (name.length < 1) {
-        console.log("TODO");
+        res.status(500).send('Incorrect value!');
         return;
     }
     request('https://world.openfoodfacts.org/cgi/suggest.pl?lc=en&tagtype=countries&string=' + name, function (error, response, body) {
@@ -264,6 +257,48 @@ app.get('/countries/:name', function(req, res) {
             res.send(getSearchedData(info));
         }
     });
+});
+
+app.post('/users/:id/favorites', async function(req, res) {
+    try {
+        const client = await MongoClient.connect(MONGO_URL, {useNewUrlParser: true});
+        const db = client.db(MONGO_DB);
+        const users = db.collection(COLLECTION);
+        users.insertOne({user_id: req.params.id, favorite: req.body.code});
+        client.close();
+    } catch (e) {
+        console.error(e)
+    }
+});
+
+app.delete('/users/:id/favorites/:code', async function(req, res) {
+    try {
+        const client = await MongoClient.connect(MONGO_URL, {useNewUrlParser: true});
+        const db = client.db(MONGO_DB);
+        const users = db.collection(COLLECTION);
+        users.deleteOne({user_id: req.params.id, favorite: req.params.code});
+        client.close();
+    } catch (e) {
+        console.error(e)
+    }
+});
+
+app.get('/users/:id/favorites', async function(req, res) {
+    try {
+        const client = await MongoClient.connect(MONGO_URL, {useNewUrlParser: true});
+        const db = client.db(MONGO_DB);
+        const users = db.collection(COLLECTION);
+        users.find({user_id: req.params.id}).toArray(function(err, result) {
+            let elements =[];
+            for (let i = 0; i < result.length; ++i) {
+                elements.push(result[i].favorite);
+            }
+            res.send({elements: elements});
+            client.close();
+        });
+    } catch (e) {
+        console.error(e)
+    }
 });
 
 app.use(function(req, res, next) {

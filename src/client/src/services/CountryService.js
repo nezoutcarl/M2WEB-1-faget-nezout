@@ -2,7 +2,7 @@ import API from '@/services/API'
 
 export default {
   fetchCountry (name, page) {
-    return API().get('country/' + name + '/products/' + page)
+    return API().get('countries/' + name + '/products/pages/' + page)
   },
   fetchCountries () {
     return API().get('countries')

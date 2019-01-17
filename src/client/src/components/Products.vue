@@ -6,7 +6,7 @@
         {{products.page_size}} products per page <br/>
         Page #{{ products.page }}<br />
         <input v-model="message" placeholder="">
-        <router-link :to="{path: '/products/' + message + '/1'}">
+        <router-link :to="{path: '/products/' + message + '/pages/1'}">
           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
         </router-link>
       </p>
@@ -14,7 +14,7 @@
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      base-url="/products/pages/"/>
     <br>
     <b-card-group columns>
       <div v-for="(product, index) in products.elements" :key="index">
@@ -24,9 +24,9 @@
                                   header-bg-variant="dark"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
-                                  style="max-width: 40rem;max-width: 40rem;"
+                                  style="max-width: 30rem;"
                                   align="center">
-            <a v-bind:href="'/product/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
+            <a v-bind:href="'/products/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
             style="max-width: 30rem;max-height: 30rem;"
             alt="No image."
             top/></a>
@@ -35,10 +35,10 @@
               <span><img :src="getNovaGroup(product.nova_group)" alt="No nova group."></span>
             </p>
             <div slot="footer">
-              <router-link :to="{path: '/product/' + product.code}">
+              <router-link :to="{path: '/products/' + product.code}">
                 <button type="button" class="btn btn-primary">Details</button>
               </router-link>
-              <button type="button" class="btn btn-primary"><i class="fa fa-star"></i></button>
+              <button type="button" @click="addFavorite(product.code)" class="btn btn-primary"><i class="fa fa-star"></i></button>
             </div>
         </b-card>
       </div>
@@ -46,13 +46,14 @@
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      base-url="/products/pages/"/>
     <br>
   </div>
 </template>
 
 <script>
 import ProductService from '@/services/ProductService'
+import FavoriteService from '@/services/FavoriteService'
 export default {
   name: 'products',
   data () {
@@ -81,6 +82,10 @@ export default {
       this.products = response.data
     },
 
+    async addFavorite (code) {
+      await FavoriteService.fetchAddFavorite(this.$auth.user.nickname, code)
+    },
+
     getNovaGroup (novaGroup) {
       return 'http://static.openfoodfacts.net/images/misc/nova-group-' + novaGroup + '.svg'
     },
@@ -97,7 +102,7 @@ export default {
       return num
     },
     linkGen (pageNum) {
-      return '/products/' + pageNum
+      return '/products/pages/' + pageNum
     },
     pageGen (pageNum) {
       return pageNum

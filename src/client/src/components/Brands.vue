@@ -6,7 +6,7 @@
       </p>
       <div v-for="(brand, index) in brands.elements" :key="index">
         <hr class="my-2">
-        <span><a v-bind:href="'/brand/' + brand.name + '/products/1'"><b>{{ brand.name }}</b></a></span><br />
+        <span><a v-bind:href="'/brands/' + brand.name + '/products/pages/1'"><b>{{ brand.name }}</b></a></span><br />
         <span><b>{{ brand.products }} products</b></span><br />
       </div>
     </div>
