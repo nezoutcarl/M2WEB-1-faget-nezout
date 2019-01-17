@@ -1,12 +1,12 @@
 <template>
-  <div class="favs">
-    <h1>Posts</h1>
-    This file will list all the posts.
+  <div class="favorites">
+    <h1>Favorites</h1>
+    This file will list all the favorites of the current user.
 
-    <div v-for="(fav, index) in favorites" :key="index">
+    <div v-for="(favorite, index) in favorites" :key="index">
       <p>
-        <span><b>{{ fav.title }}</b></span><br />
-        <span>{{ fav.description }}</span>
+        <span><b>{{ favorite.title }}</b></span><br />
+        <span>{{ favorite.description }}</span>
       </p>
     </div>
   </div>
@@ -15,7 +15,7 @@
 <script>
 import FavoriteService from '@/services/FavoriteService'
 export default {
-  name: 'favs',
+  name: 'favorites',
   data () {
     return {
       favorites: []

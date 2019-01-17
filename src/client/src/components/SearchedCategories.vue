@@ -1,17 +1,11 @@
 <template>
-  <div class="categories">
+  <div class="searched_categories">
     <div class="jumbotron">
-      <h1 class="display-3">Categories</h1>
-      <p class="lead">Categories found: {{ categories.count }}<br />
-      <input v-model="message" placeholder="">
-      <router-link :to="{path: '/categories/' + message}">
-        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-      </router-link>
-      </p>
+      <h1 class="display-3">Searched categories</h1>
     </div>
     <b-card-group columns>
       <div v-for="(category, index) in categories.elements" :key="index">
-        <b-card class="rounded" :header="category.name"
+        <b-card class="rounded" :header="councategorytry.name"
                                   header-text-variant="white"
                                   header-tag="header"
                                   header-bg-variant="dark"
@@ -20,13 +14,10 @@
                                   style="max-width: 40rem;max-width: 40rem;"
                                   align="center">
           <p class="card-text">
-            <span><b>{{ category.products }} products</b></span>
-          </p>
-          <div slot="footer">
             <router-link :to="{path: '/category/' + category.name + '/products/1'}">
               <button type="button" class="btn btn-primary">Open</button>
             </router-link>
-          </div>
+          </p>
         </b-card>
       </div>
     </b-card-group>
@@ -39,16 +30,15 @@ export default {
   name: 'categories',
   data () {
     return {
-      categories: [],
-      message: ''
+      categories: []
     }
   },
   mounted () {
-    this.getCategories()
+    this.getSearchedCategories(this.$route.params.name)
   },
   methods: {
-    async getCategories () {
-      const response = await CategoryService.fetchCategories()
+    async getSearchedCategories (name) {
+      const response = await CategoryService.fetchSearchedCategories(name)
       this.categories = response.data
     }
   }

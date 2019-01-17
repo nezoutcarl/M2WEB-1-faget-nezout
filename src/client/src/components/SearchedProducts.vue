@@ -1,20 +1,16 @@
 <template>
-  <div class="products">
+  <div class="searched_products">
     <div class="jumbotron">
-      <h1 class="display-3">Products</h1>
+      <h1 class="display-3">Searched products</h1>
       <p class="lead">Products found: {{ products.count }} <br/>
         {{products.page_size}} products per page <br/>
-        Page #{{ products.page }}<br />
-        <input v-model="message" placeholder="">
-        <router-link :to="{path: '/products/' + message + '/1'}">
-          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-        </router-link>
+        Page #{{ products.page }}
       </p>
     </div>
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      :base-url="linkGen()"/>
     <br>
     <b-card-group columns>
       <div v-for="(product, index) in products.elements" :key="index">
@@ -46,7 +42,7 @@
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      :base-url="linkGen()"/>
     <br>
   </div>
 </template>
@@ -65,19 +61,19 @@ export default {
   },
   computed: {
     pageLink () {
-      return this.linkGen(this.currentPage)
+      return this.linkGen() + this.currentPage
     }
   },
   mounted () {
-    this.getProducts(this.$route.params.page)
+    this.getSearchedProducts(this.$route.params.code, this.$route.params.page)
     this.currentPage = parseInt(this.$route.params.page)
   },
   watch: {
 
   },
   methods: {
-    async getProducts (page) {
-      const response = await ProductService.fetchProducts(page)
+    async getSearchedProducts (code, page) {
+      const response = await ProductService.fetchSearchedProducts(code, page)
       this.products = response.data
     },
 
@@ -96,8 +92,8 @@ export default {
       }
       return num
     },
-    linkGen (pageNum) {
-      return '/products/' + pageNum
+    linkGen () {
+      return '/products/' + this.$route.params.code + '/'
     },
     pageGen (pageNum) {
       return pageNum

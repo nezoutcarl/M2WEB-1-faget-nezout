@@ -12,28 +12,22 @@
           Toggle Sidebar
         </vs-sidebar-item>
         <vs-sidebar-item index="5" icon="bookmarks">
-          Favoris
+          Favorites
         </vs-sidebar-item>
-        <vs-sidebar-group icon="search" title="Recherche">
+        <vs-sidebar-group icon="search" title="Research">
           <vs-sidebar-item index="2.1" icon="store" href="/products/1">
-            Produits
+            Products
           </vs-sidebar-item>
-          <vs-sidebar-item index="2.2" icon="nature_people" href="/categories/1">
-            Catégories
+          <vs-sidebar-item index="2.2" icon="local_activity" href="/brands">
+            Brands
           </vs-sidebar-item>
-          <vs-sidebar-item index="2.3" icon="style">
-            Style
+          <vs-sidebar-item index="2.2" icon="category" href="/categories">
+            Categories
+          </vs-sidebar-item>
+          <vs-sidebar-item index="2.2" icon="flag" href="/countries">
+            Countries
           </vs-sidebar-item>
         </vs-sidebar-group>
-        <vs-sidebar-item index="2" icon="gavel">
-          History
-        </vs-sidebar-item>
-        <vs-sidebsar-item index="3" icon="https">
-          Security
-        </vs-sidebsar-item>
-        <vs-sidebar-item index="4" icon="help">
-          Help
-        </vs-sidebar-item>
       </vs-sidebar-group>
 
       <vs-divider icon="person" position="left">

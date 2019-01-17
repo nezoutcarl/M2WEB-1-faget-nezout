@@ -1,13 +1,7 @@
 <template>
-  <div class="countries">
+  <div class="searched_countries">
     <div class="jumbotron">
-      <h1 class="display-3">Countries</h1>
-      <p class="lead">Countries found: {{ countries.count }}<br />
-      <input v-model="message" placeholder="">
-      <router-link :to="{path: '/countries/' + message}">
-        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-      </router-link>
-      </p>
+      <h1 class="display-3">Searched countries</h1>
     </div>
     <b-card-group columns>
       <div v-for="(country, index) in countries.elements" :key="index">
@@ -20,13 +14,10 @@
                                   style="max-width: 40rem;max-width: 40rem;"
                                   align="center">
           <p class="card-text">
-            <span><b>{{ country.products }} products</b></span>
-          </p>
-          <div slot="footer">
             <router-link :to="{path: '/country/' + country.name + '/products/1'}">
               <button type="button" class="btn btn-primary">Open</button>
             </router-link>
-          </div>
+          </p>
         </b-card>
       </div>
     </b-card-group>
@@ -39,16 +30,15 @@ export default {
   name: 'countries',
   data () {
     return {
-      countries: [],
-      message: ''
+      countries: []
     }
   },
   mounted () {
-    this.getCountries()
+    this.getSearchedCountries(this.$route.params.name)
   },
   methods: {
-    async getCountries () {
-      const response = await CountryService.fetchCountries()
+    async getSearchedCountries (name) {
+      const response = await CountryService.fetchSearchedCountries(name)
       this.countries = response.data
     }
   }

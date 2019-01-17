@@ -1,7 +1,7 @@
 import API from '@/services/API'
 
 export default {
-  fetchUserFavorite () {
+  fetchUserFavorites () {
     return API().get('favorites')
   }
 }

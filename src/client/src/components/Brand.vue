@@ -1,31 +1,28 @@
 <template>
-  <div class="products">
+  <div class="brand">
     <div class="jumbotron">
-      <h1 class="display-3">Products</h1>
-      <p class="lead">Products found: {{ products.count }} <br/>
-        {{products.page_size}} products per page <br/>
-        Page #{{ products.page }}<br />
-        <input v-model="message" placeholder="">
-        <router-link :to="{path: '/products/' + message + '/1'}">
-          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-        </router-link>
+      <h1 class="display-3">Brand products</h1>
+      <p class="lead">Products found: {{ brand.count }} <br/>
+        {{brand.page_size}} products per page <br/>
+        Page #{{ brand.page }}
       </p>
     </div>
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      :base-url="linkGen()"/>
     <br>
     <b-card-group columns>
-      <div v-for="(product, index) in products.elements" :key="index">
+      <div v-for="(product, index) in brand.elements" :key="index">
          <b-card class="rounded" :header="product.product_name"
                                   header-text-variant="white"
                                   header-tag="header"
                                   header-bg-variant="dark"
+                                  footer="Card Footer"
                                   footer-tag="footer"
                                   footer-bg-variant="warning"
                                   style="max-width: 40rem;max-width: 40rem;"
-                                  align="center">
+                                   align="center">
             <a v-bind:href="'/product/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
             style="max-width: 30rem;max-height: 30rem;"
             alt="No image."
@@ -46,39 +43,38 @@
     <b-pagination-nav :number-of-pages="getPagesNumber()"
                       v-model="currentPage"
                       align="center"
-                      base-url="/products/"/>
+                      :base-url="linkGen()"/>
     <br>
   </div>
 </template>
 
 <script>
-import ProductService from '@/services/ProductService'
+import BrandService from '@/services/BrandService'
 export default {
-  name: 'products',
+  name: 'brand',
   data () {
     return {
-      products: [],
-      message: '',
+      brand: [],
       currentPage: 1
       // links: ['/1', '/2', '/3']
     }
   },
   computed: {
     pageLink () {
-      return this.linkGen(this.currentPage)
+      return this.linkGen() + this.currentPage
     }
   },
   mounted () {
-    this.getProducts(this.$route.params.page)
+    this.getBrand(this.$route.params.name, this.$route.params.page)
     this.currentPage = parseInt(this.$route.params.page)
   },
   watch: {
 
   },
   methods: {
-    async getProducts (page) {
-      const response = await ProductService.fetchProducts(page)
-      this.products = response.data
+    async getBrand (name, page) {
+      const response = await BrandService.fetchBrand(name, page)
+      this.brand = response.data
     },
 
     getNovaGroup (novaGroup) {
@@ -90,14 +86,14 @@ export default {
     },
 
     getPagesNumber () {
-      let num = Math.trunc(this.products.count / this.products.page_size)
-      if (this.products.count > this.products.page_size && this.products.count % this.products.page_size !== 0) {
+      let num = Math.trunc(this.brand.count / this.brand.page_size)
+      if (this.brand.count > this.brand.page_size && this.brand.count % this.brand.page_size !== 0) {
         ++num
       }
       return num
     },
-    linkGen (pageNum) {
-      return '/products/' + pageNum
+    linkGen () {
+      return '/brand/' + this.$route.params.name + '/products/'
     },
     pageGen (pageNum) {
       return pageNum

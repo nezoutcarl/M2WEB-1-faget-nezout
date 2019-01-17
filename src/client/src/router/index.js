@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Test from '@/components/Test'
-import Posts from '@/components/Posts'
+import Home from '@/components/Home'
+import Callback from '@/components/Callback'
 import Product from '@/components/Product'
 import Products from '@/components/Products'
-import Search from '@/components/Search'
+import SearchedProducts from '@/components/SearchedProducts'
+import Brand from '@/components/Brand'
+import Brands from '@/components/Brands'
 import Category from '@/components/Category'
 import Categories from '@/components/Categories'
+import SearchedCategories from '@/components/SearchedCategories'
 import Country from '@/components/Country'
 import Countries from '@/components/Countries'
-import Callback from '@/components/Callback'
-import Favorite from '@/components/Favorite'
-import Home from '@/components/Home'
+import SearchedCountries from '@/components/SearchedCountries'
+import Favorites from '@/components/Favorites'
 
 Vue.use(Router)
 
@@ -40,11 +42,21 @@ const router = new Router({
     },
     {
       path: '/products/:code/:page',
-      name: 'Search',
-      component: Search
+      name: 'SearchedProducts',
+      component: SearchedProducts
     },
     {
-      path: '/category/:id/products/:page',
+      path: '/brand/:name/products/:page',
+      name: 'Brand',
+      component: Brand
+    },
+    {
+      path: '/brands',
+      name: 'Brands',
+      component: Brands
+    },
+    {
+      path: '/category/:name/products/:page',
       name: 'Category',
       component: Category
     },
@@ -54,7 +66,12 @@ const router = new Router({
       component: Categories
     },
     {
-      path: '/country/:id/products/:page',
+      path: '/categories/:name',
+      name: 'SearchedCategories',
+      component: SearchedCategories
+    },
+    {
+      path: '/country/:name/products/:page',
       name: 'Country',
       component: Country
     },
@@ -64,19 +81,14 @@ const router = new Router({
       component: Countries
     },
     {
-      path: '/test',
-      name: 'Test',
-      component: Test
+      path: '/countries/:name',
+      name: 'SearchedCountries',
+      component: SearchedCountries
     },
     {
-      path: '/posts',
-      name: 'Posts',
-      component: Posts
-    },
-    {
-      path: '/user/:id/favorite',
+      path: '/user/:id/favorites',
       name: 'favorites',
-      component: Favorite
+      component: Favorites
     }
   ]
 })
