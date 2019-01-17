@@ -22,10 +22,10 @@
       Page Link: {{ pageLink }}
     </p>
   </div>
-  <b-card-group deck >
+  <b-card-group deck>
       <div v-for="(product, index) in products.elements" :key="index">
-         <b-card class="rounded" :title="product.product_name">
-            <a v-bind:href="'/product/' + product.code"><b-card-img class="img-size" :src="product.image_front_small_url"
+         <b-card class="rounded" :header="product.product_name">
+            <a v-bind:href="'/product/' + product.code"><b-card-img style="max-width: 10rem; min-width:15rem; max-height:15rem" :src="product.image_front_small_url"
             alt="Img"
             top/></a>
             <p class="card-text">
@@ -53,14 +53,14 @@ export default {
       // links: ['/1', '/2', '/3']
     }
   },
-  computed: {   
+  computed: {
     pageLink () {
       return this.linkGen(this.currentPage)
     }
   },
   mounted () {
     this.getProducts(this.$route.params.page)
-    this.currentPage=parseInt(this.$route.params.page)
+    this.currentPage = parseInt(this.$route.params.page)
   },
   watch: {
 
@@ -94,6 +94,7 @@ export default {
 </script>
 
 <style>
-/* .img-size {
-  max-width: calc(25% - 30px);} */
+.img-size {
+  margin-bottom: 15px;
+}
 </style>

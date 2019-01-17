@@ -1,6 +1,6 @@
 <template>
   <div id="parentx">
-    <vs-button @click="active=!active, notExpand=false" color="success" type="filled">Open</vs-button>
+    <vs-button @click="active=!active, notExpand=false" color="success" type="filled"><i class="fa fa-bars    "></i> Menu</vs-button>
     <vs-sidebar :reduce="reduce" :reduce-not-hover-expand="notExpand" parent="body" default-index="1"  color="success" class="sidebarx" spacer v-model="active">
 
       <div class="header-sidebar"  vs-align="flex-start" slot="header">
