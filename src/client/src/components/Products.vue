@@ -88,7 +88,6 @@ export default {
     pageGen (pageNum) {
       return pageNum
     }
-
   }
 }
 </script>
